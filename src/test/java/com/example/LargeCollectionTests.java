@@ -1,6 +1,8 @@
 package com.example;
 
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
+import org.opentest4j.ValueWrapper;
 
 import java.util.List;
 
@@ -79,7 +81,42 @@ class LargeCollectionTests {
                               "aaaaaaaaaaaaaaaaaaa",
                               "bbbbbbbbbbbbbbbbbbb",
                               "ccccccccccccccccccc",
-                              "ddddddddddddddddddd"]""");;
+                              "ddddddddddddddddddd"]""");
+
+
+        assertThat(comparisonFailure)
+                .extracting(AssertionFailedError::getActual)
+                .extracting(ValueWrapper::getStringRepresentation)
+                .isEqualTo("""
+                        ["aaaaaaaaaaaaaaaaaaa",
+                            "bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd",
+                            "aaaaaaaaaaaaaaaaaaa",
+                            "bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd",
+                            "aaaaaaaaaaaaaaaaaaa",
+                            "bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd"]
+                        """);
+        assertThat(comparisonFailure)
+                .extracting(AssertionFailedError::getExpected)
+                .extracting(ValueWrapper::getStringRepresentation)
+                .isEqualTo("""
+                        ["aaaaaaaaaaaaaaaaaaa",
+                            "bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd",
+                            "aaaaaaaaaaaaaaaaaaa",
+                            "bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd",
+                            "aaaaaaaaaaaaaaaaaaa",
+                            "bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd"]""");
     }
 
 }

@@ -4,6 +4,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
+import org.opentest4j.ValueWrapper;
 import org.testng.Assert;
 
 import java.util.List;
@@ -34,7 +36,20 @@ class CollectionTests {
                 .hasMessage("""
                         
                         expected: ["b", "c", "d", "e"]
-                         but was: ["a", "b", "c", "d"]""");;
+                         but was: ["a", "b", "c", "d"]""");
+
+        assertThat(comparisonFailure)
+                .extracting(AssertionFailedError::getActual)
+                .extracting(ValueWrapper::getStringRepresentation)
+                .isEqualTo("""
+                        ["a", "b", "c", "d"]""");
+
+        assertThat(comparisonFailure)
+                .extracting(AssertionFailedError::getExpected)
+                .extracting(ValueWrapper::getStringRepresentation)
+                .isEqualTo("""
+                        ["b", "c", "d", "e"]""");
+
     }
 
     @Test
@@ -42,6 +57,18 @@ class CollectionTests {
         var comparisonFailure = assertThrowsExactly(org.opentest4j.AssertionFailedError.class, () -> Assertions.assertEquals(expected, actual));
         assertThat(comparisonFailure).isNotNull()
                 .hasMessage("expected: <[b, c, d, e]> but was: <[a, b, c, d]>");;
+
+        assertThat(comparisonFailure)
+                .extracting(AssertionFailedError::getActual)
+                .extracting(ValueWrapper::getStringRepresentation)
+                .isEqualTo("""
+                        [a, b, c, d]""");
+
+        assertThat(comparisonFailure)
+                .extracting(AssertionFailedError::getExpected)
+                .extracting(ValueWrapper::getStringRepresentation)
+                .isEqualTo("""
+                        [b, c, d, e]""");
     }
 
     @Test
@@ -63,8 +90,11 @@ class CollectionTests {
         var comparisonFailure = assertThrows(AssertionError.class, () -> com.google.common.truth.Truth.assertThat(actual).isEqualTo(expected));
         assertThat(comparisonFailure).isNotNull()
                 .hasMessage("""
-                        expected: 1
-                        but was : 42""");
+                        missing (1)   : e
+                        unexpected (1): a
+                        ---
+                        expected      : [b, c, d, e]
+                        but was       : [a, b, c, d]""");
     }
 
 }
