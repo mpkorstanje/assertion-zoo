@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-class CollectionTests {
+class ListTests {
 
     final List<String> actual = List.of("a", "b", "c", "d");
     final List<String> expected = List.of("b", "c", "d", "e");
