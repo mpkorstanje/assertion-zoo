@@ -99,24 +99,27 @@ class LargeCollectionTests {
                             "aaaaaaaaaaaaaaaaaaa",
                             "bbbbbbbbbbbbbbbbbbb",
                             "ccccccccccccccccccc",
-                            "ddddddddddddddddddd"]
-                        """);
+                            "ddddddddddddddddddd"]""");
         assertThat(comparisonFailure)
                 .extracting(AssertionFailedError::getExpected)
                 .extracting(ValueWrapper::getStringRepresentation)
                 .isEqualTo("""
-                        ["aaaaaaaaaaaaaaaaaaa",
+                        ["bbbbbbbbbbbbbbbbbbb",
+                            "ccccccccccccccccccc",
+                            "ddddddddddddddddddd",
+                            "eeeeeeeeeeeeeeeeeee",
                             "bbbbbbbbbbbbbbbbbbb",
                             "ccccccccccccccccccc",
                             "ddddddddddddddddddd",
-                            "aaaaaaaaaaaaaaaaaaa",
+                            "eeeeeeeeeeeeeeeeeee",
                             "bbbbbbbbbbbbbbbbbbb",
                             "ccccccccccccccccccc",
                             "ddddddddddddddddddd",
-                            "aaaaaaaaaaaaaaaaaaa",
+                            "eeeeeeeeeeeeeeeeeee",
                             "bbbbbbbbbbbbbbbbbbb",
                             "ccccccccccccccccccc",
-                            "ddddddddddddddddddd"]""");
+                            "ddddddddddddddddddd",
+                            "eeeeeeeeeeeeeeeeeee"]""");
     }
 
 }
